@@ -1,0 +1,30 @@
+{
+  "name": "docker-browser-console",
+  "version": "0.0.0",
+  "description": "Thing that makes you run docker images in your browser",
+  "main": "index.js",
+  "dependencies": {
+    "pump": "^1.0.0",
+    "term.js": "^0.0.4",
+    "websocket-stream": "^1.0.2",
+    "ws": "^0.4.32"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mafintosh/docker-browser-console"
+  },
+  "keywords": [
+    "docker"
+  ],
+  "author": "Mathias Buus",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mafintosh/docker-browser-console/issues"
+  },
+  "homepage": "https://github.com/mafintosh/docker-browser-console"
+}
