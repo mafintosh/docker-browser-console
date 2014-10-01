@@ -2,14 +2,26 @@ var Terminal = require('term.js')
 var computed = require('computed-style')
 var ndjson = require('ndjson')
 var duplexify = require('duplexify')
+var defaultcss = require('defaultcss')
+var fs = require('fs')
+
+var style = fs.readFileSync(__dirname+'/style.css')
 
 module.exports = function(image, opts) {
   if (!opts) opts = {}
 
   var result = duplexify()
 
+  result.style = style
+
+  result.appendStyle = function() {
+    defaultcss('docker-browser-console', style)
+  }
+
   result.appendTo = function(elem) {
     if (typeof elem === 'string') elem = document.querySelector(elem)
+    elem.className += ' docker-browser-console'
+    if (opts.style !== false) result.appendStyle()
 
     var dimensions = function() {
       var el = document.createElement('div')
@@ -62,6 +74,8 @@ module.exports = function(image, opts) {
     result.on('close', function() {
       term.destroy()
     })
+
+    return result
   }
 
   return result
