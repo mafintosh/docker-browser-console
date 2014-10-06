@@ -3,15 +3,15 @@ var ndjson = require('ndjson')
 var proc = require('child_process')
 var run = require('docker-run')
 
-module.exports = function() {
+module.exports = function(image, opts) {
   var input = ndjson.parse()
   var output = ndjson.stringify()
   var result = duplexify()
 
   input.once('data', function(handshake) {
-    if (handshake.type !== 'image') return result.destroy(new Error('Invalid handshake'))
+    if (handshake.type !== 'run') return result.destroy(new Error('Invalid handshake'))
 
-    var child = run(handshake.image, {
+    var child = run(image, {
       tty: true,
       width: handshake.width,
       height: handshake.height

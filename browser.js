@@ -15,7 +15,7 @@ var off = function(elem, evt, fn) { // TODO: find module
   elem.removeEventListener(evt, fn, false)
 }
 
-module.exports = function(image, opts) {
+module.exports = function(opts) {
   if (!opts) opts = {}
 
   var result = duplexify()
@@ -79,8 +79,7 @@ module.exports = function(image, opts) {
     var output = ndjson.stringify()
 
     output.write({
-      type: 'image',
-      image: image,
+      type: 'run',
       width: wid,
       height: hei
     })

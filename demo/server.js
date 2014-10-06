@@ -11,7 +11,7 @@ var wss = new WebSocketServer({server:server})
 
 wss.on('connection', function(connection) {
   var stream = websocket(connection)
-  pump(stream, docker(), stream)
+  pump(stream, docker('mafintosh/dev'), stream)
 })
 
 server.on('request', function(req, res) {
