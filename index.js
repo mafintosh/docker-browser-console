@@ -1,6 +1,7 @@
 var duplexify = require('duplexify')
 var ndjson = require('ndjson')
 var proc = require('child_process')
+var run = require('docker-run')
 
 module.exports = function() {
   var input = ndjson.parse()
@@ -10,9 +11,14 @@ module.exports = function() {
   input.once('data', function(handshake) {
     if (handshake.type !== 'image') return result.destroy(new Error('Invalid handshake'))
 
-    var child = proc.spawn('docker', ['run', '-it', '--rm', handshake.image])
+    var child = run(handshake.image, {
+      tty: true,
+      width: handshake.width,
+      height: handshake.height
+    })
 
     input.on('data', function(data) {
+      if (data.type === 'resize') child.resize(data.width, data.height)
       if (data.type === 'stdin') child.stdin.write(data.data)
     })
 
@@ -30,7 +36,7 @@ module.exports = function() {
       })
     })
 
-    child.on('close', function() {
+    child.on('exit', function() {
       result.destroy()
     })
 
