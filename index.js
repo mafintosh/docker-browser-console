@@ -1,6 +1,5 @@
 var duplexify = require('duplexify')
 var ndjson = require('ndjson')
-var proc = require('child_process')
 var run = require('docker-run')
 
 module.exports = function(image, opts) {
