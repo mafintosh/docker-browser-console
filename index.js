@@ -1,6 +1,7 @@
 var duplexify = require('duplexify')
 var ndjson = require('ndjson')
 var run = require('docker-run')
+var xtend = require('xtend')
 
 module.exports = function(image, opts) {
   var input = ndjson.parse()
@@ -10,11 +11,11 @@ module.exports = function(image, opts) {
   input.once('data', function(handshake) {
     if (handshake.type !== 'run') return result.destroy(new Error('Invalid handshake'))
 
-    var child = run(image, {
+    var child = run(image, xtend(opts, {
       tty: true,
       width: handshake.width,
       height: handshake.height
-    })
+    }))
 
     input.on('data', function(data) {
       if (data.type === 'resize') child.resize(data.width, data.height)
