@@ -22,7 +22,7 @@ var docker = require('docker-browser-console')
 var websocket = require('websocket-stream')
 
 // create a stream for any docker image
-var terminal = docker('mafintosh/dev')
+var terminal = docker()
 
 // connect to a docker-browser-console server
 terminal.pipe(websocket('ws://localhost:10000')).pipe(terminal)
@@ -56,7 +56,7 @@ var server = new ws.WebSocketServer({port:10000})
 server.on('connection', function(socket) {
   socket = websocket(socket)
   // this will spawn the container and forward the output to the browser
-  socket.pipe(docker()).pipe(socket)
+  socket.pipe(docker('mafintosh/dev')).pipe(socket)
 })
 ```
 
