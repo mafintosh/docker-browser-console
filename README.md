@@ -29,6 +29,7 @@ terminal.pipe(websocket('ws://localhost:10000')).pipe(terminal)
 
 // append the terminal to a DOM element
 terminal.appendTo(document.body)
+terminal.style() // use a default stylesheet
 ```
 
 You can add that to an `index.html` page by doing

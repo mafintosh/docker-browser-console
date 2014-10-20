@@ -5,8 +5,6 @@ var duplexify = require('duplexify')
 var defaultcss = require('defaultcss')
 var fs = require('fs')
 
-var style = fs.readFileSync(__dirname+'/style.css')
-
 var on = function(elem, evt, fn) { // TODO: find module
   elem.addEventListener(evt, fn, false)
 }
@@ -20,16 +18,13 @@ module.exports = function(opts) {
 
   var result = duplexify()
 
-  result.style = style
-
-  result.appendStyle = function() {
-    defaultcss('docker-browser-console', style)
+  result.style = function() {
+    defaultcss('docker-browser-console', fs.readFileSync(__dirname+'/style.css'))
   }
 
   result.appendTo = function(elem) {
     if (typeof elem === 'string') elem = document.querySelector(elem)
     elem.className += ' docker-browser-console'
-    if (opts.style !== false) result.appendStyle()
 
     var dimensions = function() {
       var el = document.createElement('div')
@@ -45,7 +40,7 @@ module.exports = function(opts) {
     }()
 
     var get = function(name) {
-      return Math.round(parseInt(computed(elem, name), 10) / dimensions[name === 'width' ? 0 : 1])
+      return Math.floor(parseInt(computed(elem, name), 10) / dimensions[name === 'width' ? 0 : 1])
     }
 
     var wid = get('width')
