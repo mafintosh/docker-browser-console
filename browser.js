@@ -80,7 +80,9 @@ module.exports = function(opts) {
     })
 
     input.on('data', function(data) {
-      if (data.type === 'stderr' || data.type === 'stdout') return term.write(data.data)
+      if (data.type !== 'stderr' && data.type !== 'stdout') return
+      term.write(data.data)
+      result.emit(data.type, data.data)
     })
 
     term.open(elem)
@@ -89,6 +91,7 @@ module.exports = function(opts) {
 
     term.on('data', function(data) {
       output.write({type:'stdin', data:data})
+      result.emit('stdin', data)
     })
 
     term.on('title', function(title) {
