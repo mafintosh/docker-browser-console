@@ -22,14 +22,13 @@ var docker = require('docker-browser-console')
 var websocket = require('websocket-stream')
 
 // create a stream for any docker image
-var terminal = docker()
+var terminal = docker() // use docker({style:false}) to disable default styling
 
 // connect to a docker-browser-console server
 terminal.pipe(websocket('ws://localhost:10000')).pipe(terminal)
 
 // append the terminal to a DOM element
 terminal.appendTo(document.body)
-terminal.style() // use a default stylesheet
 ```
 
 You can add that to an `index.html` page by doing

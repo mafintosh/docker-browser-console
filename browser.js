@@ -18,12 +18,9 @@ module.exports = function(opts) {
 
   var result = duplexify()
 
-  result.style = function() {
-    defaultcss('docker-browser-console', fs.readFileSync(__dirname+'/style.css'))
-  }
-
   result.appendTo = function(elem) {
     if (typeof elem === 'string') elem = document.querySelector(elem)
+    if (opts.style !== false) defaultcss('docker-browser-console', require('./style'))
     elem.className += ' docker-browser-console'
 
     var dimensions = function() {
