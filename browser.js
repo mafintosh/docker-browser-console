@@ -61,7 +61,7 @@ module.exports = function(opts) {
 
     on(window, 'resize', onresize)
 
-    var term = new Terminal({
+    var term = result._terminal = new Terminal({
       cols: wid,
       rows: hei,
       convertEol: true
