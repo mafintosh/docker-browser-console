@@ -59,13 +59,13 @@ module.exports = function(opts) {
       })
     }
 
-    on(window, 'resize', onresize)
+    if (opts.resize !== false) on(window, 'resize', onresize)
 
-    var term = result.terminal = new Terminal({
-      cols: wid,
-      rows: hei,
-      convertEol: true
-    })
+    opts.convertEol = true
+    opts.cols = opts.cols || wid
+    opts.rows = opts.rows || hei
+
+    var term = result.terminal = new Terminal(opts)
 
     var input = ndjson.parse()
     var output = ndjson.stringify()
