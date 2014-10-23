@@ -65,7 +65,8 @@ module.exports = function(opts) {
     opts.cols = opts.cols || wid
     opts.rows = opts.rows || hei
 
-    var term = result.terminal = new Terminal(opts)
+    var renderer = opts.renderer || Terminal
+    var term = result.terminal = new renderer(opts)
 
     var input = ndjson.parse()
     var output = ndjson.stringify()
