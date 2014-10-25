@@ -40,6 +40,10 @@ module.exports = function(image, opts) {
       result.destroy()
     })
 
+    child.on('error', function(err) {
+      result.destroy(err)
+    })
+
     result.on('close', function() {
       child.kill()
     })
