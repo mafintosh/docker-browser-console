@@ -1,6 +1,6 @@
 {
   "name": "docker-browser-console",
-  "version": "4.3.0",
+  "version": "4.3.1",
   "description": "Forward input/output from docker containers to your browser",
   "main": "index.js",
   "browser": "browser.js",
