@@ -53,7 +53,7 @@ var ws = require('ws')
 var websocket = require('websocket-stream')
 var docker = require('docker-browser-console')
 
-var server = new ws.WebSocketServer({port:10000})
+var server = new ws.Server({port:10000})
 
 server.on('connection', function(socket) {
   socket = websocket(socket)
