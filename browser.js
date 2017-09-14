@@ -98,6 +98,7 @@ module.exports = function(opts) {
 
     result.on('close', function() {
       off(window, 'resize', onresize)
+      console.log('destroy')
       term.destroy()
     })
 
