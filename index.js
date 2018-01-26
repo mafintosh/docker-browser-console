@@ -3,7 +3,7 @@ var ndjson = require('ndjson')
 var run = require('docker-run')
 var xtend = require('xtend')
 
-module.exports = function(image, opts) {
+module.exports = function(image, onStart, opts) {
   var input = ndjson.parse()
   var output = ndjson.stringify()
   var result = duplexify()
@@ -42,6 +42,10 @@ module.exports = function(image, opts) {
 
     child.on('error', function(err) {
       result.destroy(err)
+    })
+    
+    child.on("start", function () {
+      onStart(child);
     })
 
     result.on('close', function() {
