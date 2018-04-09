@@ -7,8 +7,8 @@ npm install docker-browser-console
 ```
 
 To quickly try out a demo clone this repo and
-
 ```
+cd docker-browser-console
 npm install
 npm run demo
 ```
